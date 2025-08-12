@@ -1,0 +1,605 @@
+import random
+    
+health = 100
+inventory = []
+wearing = []
+chapter = "na"
+place = "The beginning"
+weapon = ""
+weaponry = []
+Max_invt = 4
+Max_wear = 3
+Max_weap = 3
+fishing = 'false'
+
+
+def clear_screen():
+    import os
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def menu_options(choice):
+    global weapon, health
+
+    if choice == "q":
+        print("BOARD WIPED")
+        print("___________")
+        clear_screen()
+        show_status()
+        find_place()
+        
+    if choice == "7":
+        print("Inventory:", inventory)
+        print("Wearing:", wearing)
+        
+    if choice == "8":
+        print("Health:", health)
+        if health <= 95:
+            heal = input("Would you like to heal yourself? (1. Yes, 2. No) ")
+            if heal == "1":
+                print(f"inventory {inventory}")
+                heal_item = input("What do you have to heal yourself with? Type inventory item as shown.")
+                if heal_item in inventory:
+                    inventory.remove(heal_item)
+                    print(f"{heal_item} has been used.")
+                    if heal_item == "bread":
+                        health += 10
+                    elif heal_item == "fish":
+                        health += 15
+                    elif heal_item == "herb poultice":
+                        health += 50
+                    elif heal_item == "meat":
+                        health += 30
+                    elif heal_item == "raw meat":
+                        health += 5
+                    elif heal_item == "mystery drink":
+                        health += random.randint(5, 100)
+                else:
+                    print(f"{heal_item} is not in your inventory.")
+        
+    if choice == "9":
+        if not weapon:
+            print("You are not using a weapon.")
+        else:
+            print("Weapon:", weapon)
+        print("Your weaponry:", weaponry)
+        changeweapon = input("Do you want to change your main weapon? (1. Yes, 2. No) ")
+        if changeweapon == "1":
+            print("Available weapons:", weaponry)
+            changeweapon = input("What weapon would you like to change to? Say name exactly as it is written.")
+            if changeweapon in weaponry:
+                weapon = changeweapon
+                print(f"{changeweapon} has become your used weapon.")
+            else:
+                print("You have decided to not use a weapon.")
+        if changeweapon == "2":
+            print("You decide to not do anything.")
+            
+    if choice == "0":
+        invent = input("1)Drop, 2)Take Off, 3)Drop Weaponry")
+        if invent == "1":
+            print("Inventory:", inventory)
+            drop = input("What would you like to drop? Say name exactly as it is written.")
+            if drop in inventory:
+                inventory.remove(drop)
+                print(f"{drop} has been removed from your inventory.")
+            else:
+                print(f"{drop} is not in your inventory.")
+            
+        if invent == "2":
+            print("Wearing:", wearing)
+            off = input("What would you like to take off? Say name exactly as it is written.")
+            if off in wearing:
+                wearing.remove(off)
+                print(f"You are no longer wearing {off}.")
+            else:
+                print(f"You are not wearing {off}.")
+            
+        if invent == "3":
+            print("Weaponry:", weaponry)
+            drop = input("What would you like to drop? Say name exactly as it is written.")
+            if drop in weaponry:
+                weaponry.remove(drop)
+                print(f"{drop} has been removed from your weaponry.")
+            else:
+                print(f"{drop} is not in your weaponry.")
+                find_place()
+                
+def find_place():
+    if place == "1":
+        scene_one()
+    if place == "1.1":
+        scene_one_one()
+    if place == "1.2":
+        scene_one_two()
+    if place == "1.1.1":
+        scene_one_one_one()
+    if place == "1.1.2":
+        scene_one_one_two()
+    if place == "1.1.1.1":
+        scene_one_one_one_one()
+    if place == "1.2":
+        scene_one_two()
+    if place == "1.2.1":
+        scene_one_two_one()
+    if place == "2":
+        scene_two()
+    if place == "2.1":
+        scene_two_one()
+    if place == "2.1.1":
+        scene_two_one_one()
+    if place == "2.1.2":
+        scene_two_one_two()
+    if place == "2.1.3":
+        scene_two_one_three()
+    if place == "2.1.4":
+        scene_two_one_four()
+    if place == "2.1.5":
+        scene_two_one_five()
+
+            
+def show_status():
+    clear_screen()
+    print("Adventures in Kyland!")
+    print("<-----------*---------->")
+    print("Menu:")
+    print("7: Show Inventory & Wearing. 8: Show Health. 9: Weapons. 0: Drop/Take off Item, q: Wipe Screen.")
+    print("============*==========")
+
+  
+def scene_one():
+    clear_screen()
+    show_status()
+    global place
+    place = "1"
+    #1
+    print("One day, you decide to move away from your little village and live somewhere else. "
+          "Going into a forest, you encounter two paths. One is darkly lit, disappearing into the bushes, "
+          "while the other is treaded heavily and has lanterns lighting the way, hanging on trees.")
+    print("1. Take the dark path.")#1.1
+    print("2. Take the lit path.")#1.2
+    print("3. Quit the game.")
+
+    choice = input("Which Path? ")
+    if choice in ["7", "8", "9", "0","q"]:
+        menu_options(choice)
+        choice = input("Which Path? ")
+
+    if choice == "1": #1.1
+        place = "1.1"
+        scene_one_one()
+    elif choice == "2": #1.2
+        place = "1.2"
+        scene_one_two()
+    elif choice == "3":
+        print("You decide to return home. Thanks for playing!")
+    else:
+        print("Invalid choice. Please try again.")
+        scene_one()
+
+def scene_one_one():
+    global place
+    place = "1.1"
+    print("=======================")
+    print("The dark path takes you through the brambles, and you have to push your way through them. "
+          "The light lowers in the forest, and it becomes harder for you to see. The wind picks up and "
+          "you can hear clanging. Check it out?")
+    print("1. Yes")#1.1.1
+    print("2. No")#1.1.2
+    print("3. Quit the game.")
+
+    choice = input("What do you do? ")
+    if choice in ["7", "8", "9", "0","q"]:
+        menu_options(choice)
+        choice = input("What do you do? ")
+    print("=======================")
+
+    if choice == "1": #1.1.1
+        place = "1.1.1"
+        scene_one_one_one()
+    elif choice == "2": #1.1.2
+        place = "1.1.2"
+        scene_one_one_two()
+    elif choice == "3":
+        print("You decide to return home. Thanks for playing!")
+    else:
+        print("Invalid choice. Please try again.")
+
+def scene_one_one_one():
+    global place
+    print("The clanging is coming from an abandoned teepee. You look inside of it and find an "
+          "old Lantern, a metal knife, a dirty cape, two pieces of bread, and a small pile of rope.")  #1.5
+    place = "1.1.1.1"
+    scene_one_one_one_one() #1.1.1.1
+
+def scene_one_one_one_one():
+    global weapon
+    picked_items = 0
+    while picked_items < Max_invt:
+        choice = input("In this game, you can only hold 4 things and wear 3 things. You can take "
+                       "all of these items. Please take one of each - it counts what you take. "
+                       "Press a number, then hit enter to take an item. "
+                       "(1. Lantern, 2. Metal Knife, 3. Cape, 4. Bread, 5. Rope; Say 6 to leave.) ")
+        if choice in ["7", "8", "9", "0","q"]:
+            menu_options(choice)
+        
+        print("=======================")
+        if choice == "6":
+            print("You leave.")
+            break
+        elif choice == "1":
+            if picked_items < Max_invt:
+                print("You take the lantern. It's old, and isn't lit, but it should help at this time of night.")
+                inventory.append("lantern")
+                picked_items += 1
+            else:
+                print("You can't carry any more items.")
+
+        elif choice == "2":
+            if picked_items < Max_invt:
+                print("You take the metal knife. It's sharp and could do you some good in these woods.")
+                weaponry.append("metal knife")
+                picked_items += 1
+            else:
+                print("You can't carry any more items.")
+
+        elif choice == "3":
+            if len(wearing) < Max_wear:
+                print("You take the cape. It's dirty, but when it's windy, it should keep you warm.")
+                wearing.append("cape")
+            else:
+                print("You can't wear any more items.")
+
+        elif choice == "4":
+            if picked_items < Max_invt:
+                print("You take one of the bread loaves. The bread feels old, but you've eaten the stalest of stale bread. This is nothing. Should fill you up.")
+                inventory.append("bread")
+                picked_items += 1
+            else:
+                print("You can't carry any more items.")
+
+        elif choice == "5":
+            if picked_items < Max_invt:
+                print("You take the rope. It's somewhat short, but it can wrap stuff, and be made into things.")
+                inventory.append("rope")
+                picked_items += 1
+            else:
+                print("You can't carry any more items.")
+        else:
+            print("Invalid choice. Please try again.")
+    scene_two()
+
+def scene_one_one_two():
+    global place
+    place = "1.1.2"
+    print("The clanging makes you nervous. You decide to keep going.") 
+    choice = input("1. Continue")
+    if choice in ["7", "8", "9", "0","q"]:
+        menu_options(choice)
+        print("The clanging makes you nervous. You decide to keep going.")
+    if choice == "1":
+        scene_two()
+
+def scene_one_two():
+    global place
+    place = "1.2"
+    print("The lit path doesn't take you deep into the forest, and you encounter a stream. "
+          "Getting some water by cupping your hands, you relax on the shore. Night comes and you decide to head on. "
+          "You take a lantern with you.")
+    place = "1.2.1"
+    scene_one_two_one()
+
+def scene_one_two_one():
+    global place
+    place = "1.2.1"
+    inventory.append("lantern")
+    choice = input("1. Continue")
+    if choice in ["7", "8", "9", "0","q"]:
+        menu_options(choice)
+        choice = input("1. Continue")
+    if choice == "1":
+        scene_two()
+
+def scene_two():
+    clear_screen()
+    show_status()
+    global weapon
+    global place
+    place = "2"
+    print("The morning comes with nice misty weather. As you continue through the woods, following a river, the earth slowly gets redder. "
+          "You bend down, and you have clay on your hands. In your old village, there was loads of clay, found by a river that had been there for years. "
+          "Now, you realize that this is the same river that was at your village. You look down and try to find a way to do what you usually do, fish.")
+
+    if not inventory:
+        print("You aren't carrying anything.")
+    else:
+        print("You have", inventory, "in your inventory.")
+
+    if not weapon:
+        print("You are not using a weapon. (press 9 to make an weapon active)")
+    else:
+        print("You have a", weapon, "as your used weapon.")
+
+    if not wearing:
+        print("You aren't wearing anything special.")
+    else:
+        print("You are wearing", wearing, ".")
+
+    global fishing
+    fishing = 'true'
+    scene_two_one()
+
+def scene_two_one(): #2.1
+    global fishing, place
+    while fishing == 'true':
+        place = "2.1"
+        choice = input("What should you do next? (1. Make a weapon, 2. Look for items, 3. Try to fish, 4. Give up, 5. Quit the game.) ")
+        if choice in ["7", "8", "9", "0","q"]: #2.1
+            menu_options(choice)
+            choice = input("What should you do next? (1. Make a weapon, 2. Look for items, 3. Try to fish, 4. Give up, 5. Quit the game.) ")
+        print("=======================")
+
+        if choice == "1":#2.1.1
+            scene_two_one_one()
+        elif choice == "2": #2.1.2
+            scene_two_one_two()
+        elif choice == "3": #2.1.3
+            scene_two_one_three()
+        elif choice == "4": #2.1.4
+            scene_two_one_four()
+            break
+        elif choice == "5":
+            print("Thanks for playing!")
+            break
+        else: #2.1.5
+            scene_two_one_five()
+
+def scene_two_one_one():
+    global place, weapon
+    place = "2.1.1"
+    if "stick" in inventory and "sharp stone" in inventory and "rope" in inventory:
+        makeweapon = input("You have a stick, rope and a sharp stone. Make a spear? (1. Yes, 2. No) ")
+        if makeweapon == "1":
+            print("You make a spear with your stick, rope and sharp stone.")
+            weaponry.append("spear")
+            inventory.remove("stick")
+            inventory.remove("sharp stone")
+            inventory.remove("rope")
+    elif "glass shard" in inventory and "rope" in inventory:
+        makeweapon = input("You have a glass shard and rope. Make a glass knife? (1. Yes, 2. No) ")
+        if makeweapon == "1":
+            print("You make a glass knife with your glass shard and rope.")
+            weaponry.append("glass knife")
+            inventory.remove("glass shard")
+            inventory.remove("rope")
+    elif "glass shard" in inventory and "stick" in inventory and "rope" in inventory:
+        makeweapon = input("You have a glass shard, rope and a stick. Make a glass spear? (1. Yes, 2. No) ")
+        if makeweapon == "1":
+            print("You make a glass spear with your glass shard, rope and stick.")
+            weaponry.append("glass spear")
+            inventory.remove("glass shard")
+            inventory.remove("stick")
+            inventory.remove("rope")
+    elif "stick" in inventory and "wide stone" in inventory and "rope" in inventory:
+        makeweapon = input("You have a stick, rope and a wide stone. Make a stone mallet? (1. Yes, 2. No) ")
+        if makeweapon == "1":
+            print("You make a stone mallet with your stick, rope and wide stone.")
+            weaponry.append("stone mallet")
+            inventory.remove("stick")
+            inventory.remove("wide stone")
+            inventory.remove("rope")
+    elif len(weaponry) >= Max_weap:
+        print("You can't carry any more weapons, so you don't even try to make another.")
+    else:
+        print("You don't have anything to make a weapon with.")
+
+def scene_two_one_two():
+    global place
+    place = "2.1.2"
+    events = ["You find a stick.", "You find a sharp stone.", "You find a wide stone.", "You find a piece of glass.", "You find some rope."]
+    random_event = random.choice(events)
+    print(random_event)
+    keep = input("Keep this item? (1. Yes, 2. No) ")
+    if keep == "1":
+        if len(inventory) < Max_invt:
+            if "stick" in random_event:
+                inventory.append("stick")
+                print("You pick up the stick!")
+            elif "sharp stone" in random_event:
+                inventory.append("sharp stone")
+                print("You pick up the sharp stone!")
+            elif "piece of glass" in random_event:
+                inventory.append("glass shard")
+                print("You pick up the glass shard!")
+            elif "wide stone" in random_event:
+                inventory.append("wide stone")
+                print("You pick up the wide stone!")
+            elif "rope" in random_event:
+                inventory.append("rope")
+                print("You pick up the rope!")
+        else:
+            print("Your inventory is full! You can't pick up the item.")
+    if keep == "2":
+        print("You decide to leave the item.")
+        
+def scene_two_one_three():
+    global place
+    place = "2.1.3"
+    if len(inventory) >= Max_invt:
+        print("Your inventory is full! You can't carry the fish.")
+    elif not weapon:
+        print("The fish evade you. You need a weapon to catch fish! (press 9 to make an weapon active)")
+    elif weapon == "metal knife":
+        print("You use your metal knife to catch a fish! You catch a nice trout.")
+        inventory.append("fish")
+    elif weapon == "spear":
+        print("You use your spear to 'spear' a fish! You catch a nice trout.")
+        inventory.append("fish")
+    elif weapon == "glass knife":
+        print("You use your glass knife to catch a fish! You catch a nice trout.")
+        inventory.append("fish") 
+    elif weapon == "glass spear":
+        print("You use your glass spear to catch a fish! You catch a nice trout.")
+        inventory.append("fish")
+    elif weapon == "stone mallet":
+        print("You use your stone mallet to smash a fish! You catch a nice trout.")
+        inventory.append("fish")
+    else:
+        print("That weapon isn't very good for fishing.")
+    
+
+def scene_two_one_four():
+    global place, fishing
+    place = "2.1.4"
+    item_to_check = "fish"
+    print("You decide that you don't feel like hunting anymore.")
+    if item_to_check in inventory:
+        print("You are happy with your catch.")
+    else:
+        print("You feel sad though...")
+    fishing = 'false'
+    scene_two_two()
+
+def scene_two_one_five():
+    global place
+    place = "2.1.5"
+    print("Invalid choice. Please try again.")
+
+
+def scene_two_two():
+    clear_screen()
+    show_status()
+    global place
+    place = "2.2"
+    print("You are uncertain if you should leave the river and explore the land around you.") 
+    print("-North, there's clay cliffs, melting into the river. ")
+    print("-To the west, where you came from, theres the forest, and continuing that way leads you back to you village.")
+    print("-To the northeast, well, you can follow the river.") 
+    print("-Going straight east takes you to an clearer area, but you can't see much else.")
+    print("-South, the forest is lightly brushing an sandylike area, with an hill, covering the rest of the view.")
+    if not inventory:
+        print("You aren't carrying anything.")
+    else:
+        print("You have", inventory, "in your inventory.")
+
+    if not weapon:
+        print("You are not using a weapon. (press 9 to make an weapon active)")
+    else:
+        print("You have a", weapon, "as your used weapon.")
+
+    if not wearing:
+        print("You aren't wearing anything special.")
+    else:
+        print("You are wearing", wearing, ".")
+
+    choice = input("Where do you want to go? (1. North, 2. West, 3. Northeast, 4. East, 5. South) ")
+    if choice in ["7", "8", "9", "0","q"]: #2.1
+        menu_options(choice)
+        choice = input("Where do you want to go? (1. North, 2. West, 3. Northeast, 4. East, 5. South) ")
+    if choice == "1":#2.2.1
+        scene_two_two_one()
+    if choice == "2":#2.2.2
+        scene_two_two_two()
+    if choice == "3":#2.2.3
+        scene_two_two_three()
+    if choice == "4":#2.2.4
+        scene_two_two_four()
+    if choice == "5":#2.2.5
+        scene_two_two_five()
+
+#2.2.1
+def scene_two_two_one():
+    clear_screen()
+    show_status()
+    global place
+    global chapter
+    place = "2.2.1"
+    print("You decide to stay where you are, at the clay cliffs. The river reminds you of your village, and will make it easy to return and come. You start thinking of an place to sleep. Permanently.")
+    chapter = "riverbank"
+    riverbank_one()
+#2.2.2
+def scene_two_two_two():
+    clear_screen()
+    show_status()
+    global place
+    global chapter
+    place = "2.2.2"
+    print("Going back into the forest, you encounter a small clearing. Not too far off from the lanterns and the river. This would be a good place to make an camp. You start thinking of an place to sleep. Permanently.")
+    chapter = "forest"
+    forest_one()
+#2.2.3
+def scene_two_two_three():
+    clear_screen()
+    show_status()
+    global place
+    global chapter
+    place = "2.2.3"
+    print("You head norteast, following the river. The river widens, and you have to stop, as an huge lake, glistening in the sun, with fish jumping out of the water. It's so beautiful, you don't think you'd ever leave. You start thinking of an place to sleep. Permanently.")
+    chapter = "lake"
+    lake_one()
+#2.2.4
+def scene_two_two_four():
+    clear_screen()
+    show_status()
+    global place
+    global chapter
+    place = "2.2.4"
+    print("You decide to head east. The clay slowly changes into grass. Before you know it, the hills flow from the horizon foward, and the shine of the sun is wonderful. You can see deer grazing from far away, and few trees dot the surface of the ground. Sitting on a rock, watching birds fly by, you start thinking of an place to sleep. Permanently.")
+    chapter = "grassland"
+    grassland_one()
+#2.2.5
+def scene_two_two_five():
+    clear_screen()
+    show_status()
+    global place
+    global chapter
+    place = "2.2.5"
+    print("You go south. Dragging yourself uphill, you are lead into an arid zone, only fortold by stories by you elders. You decide that if anyone can surivive around here, i'd be you. You start thinking of an place to sleep. Permanently. ")
+    chapter = "aridzone"
+    aridzone_one()
+
+
+def riverbank_one():
+    clear_screen()
+    show_status()
+    global place
+    global chapter
+    place = "1"
+    print("")
+
+def forest_one():
+    clear_screen()
+    show_status()
+    global place
+    global chapter
+    place = "1"
+    print("")
+def lake_one():
+    clear_screen()
+    show_status()
+    global place
+    global chapter
+    place = "1"
+    print("")
+
+def grassland_one():
+    clear_screen()
+    show_status()
+    global place
+    global chapter
+    place = "1"
+    print("")
+
+def aridzone_one():
+    clear_screen()
+    show_status()
+    global place
+    global chapter
+    place = "1"
+    print("")
+
+
+
+
+# Start the game KEEP AT BOTTOM
+if __name__ == "__main__":
+    scene_one()
